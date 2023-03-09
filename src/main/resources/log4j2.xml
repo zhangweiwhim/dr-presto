@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <Properties>
+        <property name="basePath">日志目录</property>
+        <property name="rolling_pattern">%d{yyyy-MM-dd}.log.gz</property>
+        <property name="log_pattern">%msg%xEx%n</property>
+    </Properties>
+
+    <appenders>
+        <RollingFile name="infoLogRollingFile" fileName="${basePath}/query_info.log"
+                     filePattern="${basePath}/query_info.log${rolling_pattern}" append="true" immediateFlush="false" bufferedIO="true" bufferSize="1048576">
+            <PatternLayout pattern="${log_pattern}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="failedLogRollingFile" fileName="${basePath}/query_failed.log"
+                     filePattern="${basePath}/query_failed.log${rolling_pattern}" append="true" immediateFlush="false" bufferedIO="true" bufferSize="1048576">
+            <PatternLayout pattern="${log_pattern}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="planLogRollingFile" fileName="${basePath}/query_plan.log"
+                     filePattern="${basePath}/query_plan.log${rolling_pattern}" append="true" immediateFlush="false" bufferedIO="true" bufferSize="1048576">
+            <PatternLayout pattern="${log_pattern}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </appenders>
+    <loggers>
+        <Logger name="infoLog" additivity="false" level="INFO">
+            <appender-ref ref="infoLogRollingFile" level="INFO"/>
+        </Logger>
+        <Logger name="failedLog" additivity="false" level="INFO">
+            <appender-ref ref="failedLogRollingFile" level="INFO"/>
+        </Logger>
+        <Logger name="planLog" additivity="false" level="INFO">
+            <appender-ref ref="planLogRollingFile" level="INFO"/>
+        </Logger>
+    </loggers>
+
+</configuration>
